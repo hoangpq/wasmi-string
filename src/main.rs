@@ -153,17 +153,12 @@ fn main() {
         .expect("export name `memory` is not of memory type")
         .to_owned();
 
-    let _s1 = String::from("hoang, phan quoc");
     let _s2 = String::from_utf8(vec![
         76, 195, 182, 119, 101, 32, 232, 128, 129, 232,
         153, 142, 32, 76, 195, 169, 111, 112, 97, 114, 100
     ]).unwrap();
 
     let p = new_string(&instance, &memory, _s2.clone());
-
-    /* let result = instance
-        .invoke_export("test3", &[RuntimeValue::I32(p as i32)], &mut NopExternals); */
-
     let result = instance
         .invoke_export("digest", &[RuntimeValue::I32(p as i32)], &mut NopExternals);
 
@@ -175,17 +170,10 @@ fn main() {
                     assert_eq!("b12ca521f06bb949e47a0cc05656c9075bca63ed", s);
                     println!("Sha1 of `{}` is `{}`", _s2.clone(), s);
                 }
-                _ => println!("Not handle yet")
+                _ => println!("Not implemented yet")
             }
         }
         Err(e) => match e {
-            Error::Instantiation(e) => println!("{}", e),
-            Error::Function(e) => println!("{}", e),
-            Error::Table(e) => println!("{}", e),
-            Error::Memory(e) => println!("{}", e),
-            Error::Global(e) => println!("{}", e),
-            Error::Value(e) => println!("{}", e),
-            Error::Trap(e) => println!("{}", e),
             _ => println!("Not implemented yet")
         }
     }
